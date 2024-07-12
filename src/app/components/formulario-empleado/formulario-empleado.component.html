@@ -1,0 +1,33 @@
+<mat-card>
+    <form [formGroup]="empleadoForm" (ngSubmit)="calcularSalario()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre del Empleado</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Salario por Hora</mat-label>
+        <input matInput type="number" formControlName="hourlyWage">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Horas Trabajadas</mat-label>
+        <input matInput type="number" formControlName="hoursWorked">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Horas Extras</mat-label>
+        <input matInput type="number" formControlName="overtimeHours">
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!empleadoForm.valid">Calcular Salario</button>
+    </form>
+  
+    <div *ngIf="salarioResponse">
+      <p>Salario Regular: {{ salarioResponse.regularSalary }}</p>
+      <p>Salario por Horas Extras: {{ salarioResponse.overtimeSalary }}</p>
+      <p>Deducciones: {{ salarioResponse.deductions }}</p>
+      <p>Salario Neto: {{ salarioResponse.netSalary }}</p>
+    </div>
+  </mat-card>
+  
