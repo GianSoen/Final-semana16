@@ -1,6 +1,10 @@
-mat-card {
+mat-toolbar {
+    margin-bottom: 20px;
+  }
+  
+  mat-card {
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 0 auto;
   }
   
   mat-form-field {
@@ -10,5 +14,9 @@ mat-card {
   button {
     display: block;
     margin-top: 1rem;
+  }
+  
+  mat-card-footer p {
+    margin: 0.5rem 0;
   }
   

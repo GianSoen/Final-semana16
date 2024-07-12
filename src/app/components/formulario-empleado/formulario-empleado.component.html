@@ -1,33 +1,49 @@
-<mat-card>
-    <form [formGroup]="empleadoForm" (ngSubmit)="calcularSalario()">
-      <mat-form-field appearance="fill">
-        <mat-label>Nombre del Empleado</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
+<mat-toolbar color="primary">
+    <mat-icon>calculate</mat-icon>
+    <span>Calculadora de Salarios</span>
+  </mat-toolbar>
   
-      <mat-form-field appearance="fill">
-        <mat-label>Salario por Hora</mat-label>
-        <input matInput type="number" formControlName="hourlyWage">
-      </mat-form-field>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Ingrese los Datos del Empleado</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="empleadoForm" (ngSubmit)="calcularSalario()">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre del Empleado</mat-label>
+          <input matInput formControlName="name">
+          <mat-error *ngIf="empleadoForm.get('name')?.hasError('required')">Nombre es requerido</mat-error>
+        </mat-form-field>
   
-      <mat-form-field appearance="fill">
-        <mat-label>Horas Trabajadas</mat-label>
-        <input matInput type="number" formControlName="hoursWorked">
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Salario por Hora</mat-label>
+          <input matInput type="number" formControlName="hourlyWage">
+          <mat-error *ngIf="empleadoForm.get('hourlyWage')?.hasError('required')">Salario por hora es requerido</mat-error>
+          <mat-error *ngIf="empleadoForm.get('hourlyWage')?.hasError('min')">Debe ser mayor que 0</mat-error>
+        </mat-form-field>
   
-      <mat-form-field appearance="fill">
-        <mat-label>Horas Extras</mat-label>
-        <input matInput type="number" formControlName="overtimeHours">
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Horas Trabajadas</mat-label>
+          <input matInput type="number" formControlName="hoursWorked">
+          <mat-error *ngIf="empleadoForm.get('hoursWorked')?.hasError('required')">Horas trabajadas son requeridas</mat-error>
+          <mat-error *ngIf="empleadoForm.get('hoursWorked')?.hasError('min')">Debe ser mayor o igual a 0</mat-error>
+        </mat-form-field>
   
-      <button mat-raised-button color="primary" type="submit" [disabled]="!empleadoForm.valid">Calcular Salario</button>
-    </form>
+        <mat-form-field appearance="fill">
+          <mat-label>Horas Extras</mat-label>
+          <input matInput type="number" formControlName="overtimeHours">
+          <mat-error *ngIf="empleadoForm.get('overtimeHours')?.hasError('required')">Horas extras son requeridas</mat-error>
+          <mat-error *ngIf="empleadoForm.get('overtimeHours')?.hasError('min')">Debe ser mayor o igual a 0</mat-error>
+        </mat-form-field>
   
-    <div *ngIf="salarioResponse">
-      <p>Salario Regular: {{ salarioResponse.regularSalary }}</p>
-      <p>Salario por Horas Extras: {{ salarioResponse.overtimeSalary }}</p>
-      <p>Deducciones: {{ salarioResponse.deductions }}</p>
-      <p>Salario Neto: {{ salarioResponse.netSalary }}</p>
-    </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!empleadoForm.valid">Calcular Salario</button>
+      </form>
+    </mat-card-content>
+    <mat-card-footer *ngIf="salarioResponse">
+      <p><strong>Salario Regular:</strong> {{ salarioResponse.regularSalary | currency }}</p>
+      <p><strong>Salario por Horas Extras:</strong> {{ salarioResponse.overtimeSalary | currency }}</p>
+      <p><strong>Deducciones:</strong> {{ salarioResponse.deductions | currency }}</p>
+      <p><strong>Salario Neto:</strong> {{ salarioResponse.netSalary | currency }}</p>
+    </mat-card-footer>
   </mat-card>
   
